@@ -28,4 +28,14 @@ public class Board {
  public Piece getPiecePosition(Position p) {
   return pieces[p.getRow()][p.getColumn()];
  }
+
+ /*
+  O metodo recebe uma peça e uma posisão e sera repassado
+  para a matriz, preenchendo com a peça e sua posição no tabuleiro
+ */
+ public void placePiece(Piece piece, Position position) {
+  this.pieces[position.getRow()][position.getColumn()] = piece;
+  // a peça não tera mais o valor null, recebera a posição obtida no parametro do metodo
+  piece.position = position;
+ }
 }
