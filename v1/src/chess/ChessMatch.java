@@ -2,6 +2,7 @@ package chess;
 
 import boardgame.Board;
 import boardgame.Position;
+import chess.pieces.King;
 import chess.pieces.Rook;
 
 public class ChessMatch {
@@ -33,7 +34,13 @@ public class ChessMatch {
   os dois sera passados para o metodo da instancia boarde
  */
  private void initialSetup() {
-  this.board.placePiece(new Rook(this.board, Color.WHITE), new Position(2, 4));
+  this.board.placePiece(new Rook(this.board, Color.WHITE), new Position(0, 0));
+  this.board.placePiece(new Rook(this.board, Color.WHITE), new Position(0, 7));
+  this.board.placePiece(new King(this.board, Color.WHITE), new Position(0, 3));
+
+  // test mesma posicao
+   //this.board.placePiece(new King(this.board, Color.WHITE), new Position(0, 3));
+  this.board.placePiece(new King(this.board, Color.WHITE), new Position(2, 6));
  }
 
 }
