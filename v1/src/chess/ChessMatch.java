@@ -39,8 +39,13 @@ public class ChessMatch {
   this.board.placePiece(new King(this.board, Color.WHITE), new Position(0, 3));
 
   // test mesma posicao
-   //this.board.placePiece(new King(this.board, Color.WHITE), new Position(0, 3));
-  this.board.placePiece(new King(this.board, Color.WHITE), new Position(2, 6));
+  //this.board.placePiece(new King(this.board, Color.WHITE), new Position(0, 3));
+  
+  // test mesma linha nao existe
+  //this.board.placePiece(new King(this.board, Color.WHITE), new Position(9, 2));
+  
+  // test coluna nao existe
+  //this.board.placePiece(new King(this.board, Color.WHITE), new Position(2, 9));
  }
 
 }
