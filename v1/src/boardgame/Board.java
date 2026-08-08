@@ -1,5 +1,7 @@
 package boardgame;
 
+import chess.ChessPiece;
+import chess.Color;
 import exceptions.BoardException;
 
 public class Board {
@@ -48,7 +50,7 @@ public class Board {
 
  /*
   O metodo recebe uma peça e uma posisão e sera repassado
-  para a matriz, preenchendo com a peça e sua posição no tabuleiro
+  para a matriz, preenchendo o tabuleiro com a peça na posição indicada
  */
  public void placePiece(Piece piece, Position position) {
   String msg = "Erro: Já existe uma peça nessa posição, linha: ";
@@ -56,7 +58,7 @@ public class Board {
    throw new BoardException(msg + position.getRow() + " e coluna: " + position.getColumn());
   
   this.pieces[position.getRow()][position.getColumn()] = piece;
-  // a peça não tera mais o valor null, recebera a posição obtida no parametro do metodo
+  // a peça não tera mais o valor null, mas recebera a posição indicada no parametro do metodo
   piece.position = position;
  }
 
@@ -67,6 +69,26 @@ public class Board {
    && column >= 0
    && column < columns;
  }
+
+
+ // metodo para remover uma do tabuleiro
+ public Piece removePiece(Position position) {
+  // validação
+  String msg = "Erro: essa posição não existe no tabuleiro";
+  if (!positionExists(position)) throw new BoardException(msg);
+  if (getPiecePosition(position) == null) return null;
+
+  // se a pea na determinada posição existe ira receber null
+  // assim retirando a peça da posição que estava
+  Piece auxiliaryPiece =  getPiecePosition(position);
+  auxiliaryPiece.position = null;
+
+  // a matriz de peças tambem recebera null a posição que estava a peça
+  pieces[position.getRow()][position.getColumn()] = null;
+
+  return auxiliaryPiece;
+ }
+
  
  // Verifica se a posição existe no tabuleiro.
  public boolean positionExists(Position position) {
@@ -75,8 +97,6 @@ public class Board {
 
  // Verifica se a peça existe no tabuleiro e se a posição é valida.
  public boolean thereIsAPiece(Position position) {
-  // String msg = "Erro: essa posição não existe no tabuleiro";
-  // if (!positionExists(position)) throw new BoardException(msg);
 
   String msg = null;
   if (position.getRow() > this.rows) {

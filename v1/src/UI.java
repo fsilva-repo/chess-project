@@ -1,4 +1,8 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import chess.ChessPiece;
+import chess.ChessPosition;
 import chess.Color;
 
 public class UI {
@@ -58,6 +62,24 @@ public class UI {
    System.out.print(" ");
 	}
 	
+ 
+	public static ChessPosition readChessPosition(Scanner sc) {
+		try {
+			String s = sc.nextLine();
+			char col = s.charAt(0);
+			int row = Integer.parseInt(s.substring(1));
+		 return new ChessPosition(col, row);
+		} catch (Exception e) {
+			String msg = "Erro na leitura do ChessPosition: valores validos entre a1 e 8h";
+			throw new InputMismatchException(msg); 
+		}
+	}
+
+
+
+
+
+
 }
 
 
