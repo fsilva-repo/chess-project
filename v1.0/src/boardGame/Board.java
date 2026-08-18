@@ -30,10 +30,20 @@ public class Board {
     this.columns = columns;
   }
 
-  public Piece pice(int row, int col) {
-    return this.pieces[row][col];
+  public Piece piece(int row, int col) {
+    return pieces[row][col];
   }
-    public Piece pice(Position p) {
-    return this.pieces[p.getRow()][p.getColumn()];
+  
+  public Piece piece(Position p) {
+    return pieces[p.getRow()][p.getColumn()];
+  }
+
+  /*
+   * metodo recebe uma peça e uma posição e as define na matriz
+   * de peças do tabuleiro
+  */
+  public void palcePiece(Piece piece, Position position) {
+    pieces[position.getRow()][position.getColumn()] = piece;
+    piece.position = position;
   }
 }

@@ -1,12 +1,15 @@
 package chess;
 
 import boardGame.Board;
+import boardGame.Position;
+import chess.chessPieces.Rook;
 
 public class ChessMatch {
  private Board board;
 
  public ChessMatch() {
   this.board = new Board(8, 8);
+  InitialSetup();
  }
 
  /* 
@@ -26,10 +29,14 @@ public class ChessMatch {
       /* faremos o downCast para converter a matriz de Piece
        * para ChessPiece
       */
-      chessPieces[i][j] = (ChessPiece) board.pice(i, j);
+      chessPieces[i][j] = (ChessPiece) board.piece(i, j);
     }
   }
   return chessPieces;
  }
  
+ private void InitialSetup() {
+  board.palcePiece(new Rook(board, Color.WHITE),
+  new Position(0, 2));
+ }
 }
