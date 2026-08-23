@@ -1,8 +1,11 @@
 package chess;
 
 import boardGame.Board;
+import boardGame.Piece;
+import boardGame.Position;
 import chessPieces.King;
 import chessPieces.Rook;
+import exception.ChessException;
 
 public class ChessMatch {
  private Board board;
@@ -35,8 +38,49 @@ public class ChessMatch {
   return chessPieces;
  }
 
+ /**
+  * o metodo recebe as posições origem e destino
+  * confirma se são validas
+  * e utiliza o metodo makeMove para fazer a retirada da peca
+  * da posição de origem e dar a ela a posição de destino
+  */
+ public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+  Position source = sourcePosition.toPosition();
+  Position target = targetPosition.toPosition();
+  validateSourcePosition(source);
+  validateTargetPosition(target);
+  Piece capturedPiece = makeMove(source, target);
+  return (ChessPiece) capturedPiece;
+ }
+
+ /*
+  * movimentação da peça.
+  * o metedo remove a posição atual de uma determinada
+  * peça e define sua nova posição no tabuleiro
+ */
+  private Piece makeMove(Position source, Position target) {
+    Piece piece = board.removePiece(source);
+    Piece capturedPiece = board.removePiece(target);
+    board.placePiece(piece, target);
+    return capturedPiece;
+  }
+
+
+ // importante validação da posição informada
+ private void validateSourcePosition(Position p) {
+  if (!board.thereIsAPiece(p))
+    throw new ChessException("Não existe uma peça na posição de origem");
+ }
+
+ private void validateTargetPosition(Position p) {
+  if (!board.positionExists(p))
+   throw new ChessException("A posição de destino não existe no tabuleiro");
+ }
+
+
+
  private void placeNewPiece(char column, int row, ChessPiece piece) {
-  board.palcePiece(piece, new ChessPosition(column, row).toPosition());
+  board.placePiece(piece, new ChessPosition(column, row).toPosition());
  }
  
  private void InitialSetup() {

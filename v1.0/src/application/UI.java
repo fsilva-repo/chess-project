@@ -1,6 +1,10 @@
 package application;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import chess.ChessPiece;
+import chess.ChessPosition;
 import chess.Color;
 
 public class UI {
@@ -27,6 +31,25 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+  /**
+   * o metodo extrai os valores da coluna e linha recebidos
+   * do scanner e retorna uma instancia do ChessPosition com
+   * a posição da peca
+   */
+  public static ChessPosition readChessPosition(Scanner sc) {
+    try {
+      String s = sc.nextLine();
+      char col = s.charAt(0);
+      int row = Integer.parseInt(s.substring(1));
+      return new ChessPosition(col, row);
+    }
+    catch (RuntimeException e) {
+      throw new InputMismatchException("Erro valor recebido invalido: valores validos estão entre a1 ate h8");
+    }
+  }
+
+
 
   public static void printBoard(ChessPiece[][] pieces) {
     System.out.println();
@@ -58,14 +81,4 @@ public class UI {
     System.out.print(" ");
 	}
 
-
-
-  // private static void  printPiece(ChessPiece piece) {
-  //   if (piece == null) {
-  //     System.out.print("-");
-  //   } else {
-  //     System.out.print(piece);
-  //   }
-  //   System.out.print(" ");
-  // }
 }

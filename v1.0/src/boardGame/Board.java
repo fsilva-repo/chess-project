@@ -43,10 +43,32 @@ public class Board {
   }
 
   /*
+    * se nao existe a posicao lanca exception
+    * se nao existe peca na posicao retorna null
+    * se existe peca na posicao indicada
+    * a matriz de pecas na posicao alvo recebe null
+    * e o metodo retorna a peca com o valor null. 
+  */
+  public Piece removePiece(Position p) {
+    if (!positionExists(p)) {
+      throw new BoardException("Essa posição não existe no tabuleiro");
+    }
+    if (piece(p) == null) {
+      return  null;
+    }
+    Piece aux = piece(p);
+    pieces[p.getRow()][p.getColumn()] = null;
+    return aux;
+  }
+
+
+
+
+  /*
    * metodo recebe uma peça e uma posição e as define na matriz
    * de peças do tabuleiro
   */
-  public void palcePiece(Piece piece, Position position) {
+  public void placePiece(Piece piece, Position position) {
     if (thereIsAPiece(position))
       throw new BoardException("Já existe uma peça na posição " + position);
     pieces[position.getRow()][position.getColumn()] = piece;
@@ -67,4 +89,5 @@ public class Board {
       throw new BoardException("Essa posição não existe no tabuleiro");
     return piece(position) != null;
   }
+
 }
