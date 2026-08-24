@@ -8,8 +8,6 @@ import chess.ChessPosition;
 import chess.Color;
 
 public class UI {
-
-
       
   // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
 
@@ -31,6 +29,12 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+  public static void clearScreen() {
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+  }
+
 
   /**
    * o metodo extrai os valores da coluna e linha recebidos
