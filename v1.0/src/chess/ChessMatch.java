@@ -66,10 +66,12 @@ public class ChessMatch {
   }
 
 
- // importante validação da posição informada
+ // importante validação da posição informada, e de sua possivel movimentação
  private void validateSourcePosition(Position p) {
   if (!board.thereIsAPiece(p))
     throw new ChessException("Não existe uma peça na posição de origem");
+  if (!board.piece(p).istThereAnyPossibleMove())
+    throw new ChessException("Não existe movimentos possiveis para essa peça");
  }
 
  private void validateTargetPosition(Position p) {
@@ -78,11 +80,12 @@ public class ChessMatch {
  }
 
 
-
+ // metodo para constroir a peça define sua posição no tabuleiro 
  private void placeNewPiece(char column, int row, ChessPiece piece) {
   board.placePiece(piece, new ChessPosition(column, row).toPosition());
  }
  
+ // instancia as peça que serão utilizadas
  private void InitialSetup() {
   placeNewPiece('a', 2, new Rook(board, Color.WHITE));
   placeNewPiece('e', 1, new King(board, Color.WHITE));
@@ -91,5 +94,6 @@ public class ChessMatch {
   placeNewPiece('a', 7, new Rook(board, Color.BLACK));
   placeNewPiece('d', 8, new King(board, Color.BLACK));
   placeNewPiece('h', 7, new Rook(board, Color.BLACK));
-}
+ }
+
 }
