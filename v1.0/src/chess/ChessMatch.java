@@ -15,23 +15,16 @@ public class ChessMatch {
   InitialSetup();
  }
 
- /* 
-  * O metodo resgata o tamanho da matriz
-  * de peças do tabuleiro mas retorna
-  * uma matriz do tipo ChessPiece pois
-  * a camada do pacote chess não mantem
-  * contado direto com as classes do
-  * pacote boardGames, mas apenas
-  * atraves de instancias e extenções 
+ /* metodo para converter os tipos Piece em
+  * ChessPiece os tipos que serão postas
+  * no tabuleiro
   */
  public ChessPiece[][] getPieces() {
   ChessPiece[][] chessPieces = new ChessPiece[board.getRows()][board.getColumns()];
 
   for (int i = 0; i < board.getRows(); i++) {
     for (int j = 0; j < board.getColumns(); j++) {
-      /* faremos o downCast para converter a matriz de Piece
-       * para ChessPiece
-      */
+      // down cast necessario para devolver uma matriz de ChessPiece
       chessPieces[i][j] = (ChessPiece) board.piece(i, j);
     }
   }
@@ -45,10 +38,13 @@ public class ChessMatch {
   * da posição de origem e dar a ela a posição de destino
   */
  public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+  // conversao para coordenadas aceitas pelo tabuleiro de xadrez
   Position source = sourcePosition.toPosition();
   Position target = targetPosition.toPosition();
+  // valida se as posições atual e destino existem no tabuleiro
   validateSourcePosition(source);
-  validateTargetPosition(target);
+  validateTargetPosition(source, target);
+  // por fim sera retornada uma tipo ChessPiece com uma nova posição no tabuleiro 
   Piece capturedPiece = makeMove(source, target);
   return (ChessPiece) capturedPiece;
  }
@@ -66,17 +62,24 @@ public class ChessMatch {
   }
 
 
- // importante validação da posição informada, e de sua possivel movimentação
+ // importante validação da posição informada se existe possiveis movimentação 
  private void validateSourcePosition(Position p) {
+  // verifica posição valida e se à alguma peça na posição de destino
   if (!board.thereIsAPiece(p))
     throw new ChessException("Não existe uma peça na posição de origem");
+  // verifica se à posibilidade de movimento
   if (!board.piece(p).istThereAnyPossibleMove())
     throw new ChessException("Não existe movimentos possiveis para essa peça");
  }
 
- private void validateTargetPosition(Position p) {
-  if (!board.positionExists(p))
-   throw new ChessException("A posição de destino não existe no tabuleiro");
+ private void validateTargetPosition(Position source, Position target) {
+  // if (!board.positionExists(p))
+  // throw new ChessException("A posição de destino não existe no tabuleiro");
+
+  if (!board.piece(source).possibleMove(target)) {
+    throw new ChessException("A peça não pode ser movida para a posição de destino");
+  }
+
  }
 
 

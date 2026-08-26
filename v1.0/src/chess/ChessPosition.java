@@ -22,6 +22,7 @@ public class ChessPosition {
     return row;
   }
 
+  // converte da posição da matriz para posição do atbuleiro de xadrez
   protected Position toPosition() {
     return new Position(8 - row, column - 'a');
   }

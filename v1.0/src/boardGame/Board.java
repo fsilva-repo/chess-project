@@ -2,16 +2,12 @@ package boardGame;
 
 import exception.BoardException;
 
-// o tabuleiro contem apenas uma
-// matriz de peças e os atributos
-// rows e columns que dira qual sera o
-// tamanho dessa matriz
 public class Board {
   private int rows;
   private int columns;
 
-  // uma matriz de tipo Piece
-  // o tamanho do tabuleiro sera o tamanho
+  // uma matriz do tipo Piece.
+  // o tamanho do tabuleiro tera as dimensões
   // dessa matriz de peças
   private Piece[][] pieces;
   public Board(int rows, int columns) {
@@ -30,6 +26,7 @@ public class Board {
   public int getColumns() {
     return columns;
   }
+
   public Piece piece(int row, int col) {
     if (!validation(row, col))
       throw new BoardException("Essa posição não existe no tabuleiro");
@@ -62,8 +59,6 @@ public class Board {
   }
 
 
-
-
   /*
    * metodo recebe uma peça e uma posição e as define na matriz
    * de peças do tabuleiro
@@ -75,15 +70,17 @@ public class Board {
     piece.position = position;
   }
 
+  // verifica se a posição existe atavez dos valores da coluna e linha
   private boolean validation(int row, int column) {
     return row >= 0 && row < this.rows && column >= 0 && column < this.columns;
   }
   
+  // verifica se a posição existe atavez de uma Position 
   public boolean positionExists(Position position) {
     return validation(position.getRow(), position.getColumn());
   }
 
-
+ // verifica se a posição exite e se contem alguma peça
   public boolean thereIsAPiece(Position position) {
     if (!positionExists(position))
       throw new BoardException("Essa posição não existe no tabuleiro");

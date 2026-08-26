@@ -8,7 +8,9 @@ import chess.ChessPosition;
 import chess.Color;
 
 public class UI {
-      
+  
+  // *** as cores utilizadas no terminal ***
+
   // https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
 
   public static final String ANSI_RESET = "\u001B[0m";
@@ -30,6 +32,7 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+  // metodo para limpar a tela
   public static void clearScreen() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
@@ -54,7 +57,7 @@ public class UI {
   }
 
 
-
+  // imprime o tabuleiro
   public static void printBoard(ChessPiece[][] pieces) {
     System.out.println();
 
@@ -70,6 +73,7 @@ public class UI {
     System.out.println();
   }
 
+  // metodo auxilliar para imprimir a peça, utilizada por printBoard
   private static void printPiece(ChessPiece piece) {
     if (piece == null) {
       System.out.print("-");
