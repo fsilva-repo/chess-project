@@ -31,6 +31,17 @@ public class ChessMatch {
   return chessPieces;
  }
 
+
+ // validando e entregando os possiveis movimentos da peça
+ // apartir de uma posição de origem.
+ // metodo auxiliar para colorir o background da movimentação da peça
+ public boolean[][] possibleMoves(ChessPosition sourcePosition) {
+  Position position = sourcePosition.toPosition();
+  validateSourcePosition(position);
+  return board.piece(position).possibleMoves();
+ }
+
+
  /**
   * o metodo recebe as posições origem e destino
   * confirma se são validas
@@ -61,7 +72,6 @@ public class ChessMatch {
     return capturedPiece;
   }
 
-
  // importante validação da posição informada se existe possiveis movimentação 
  private void validateSourcePosition(Position p) {
   // verifica posição valida e se à alguma peça na posição de destino
@@ -83,7 +93,7 @@ public class ChessMatch {
  }
 
 
- // metodo para constroir a peça define sua posição no tabuleiro 
+ // metodo para construir a peça define sua posição no tabuleiro 
  private void placeNewPiece(char column, int row, ChessPiece piece) {
   board.placePiece(piece, new ChessPosition(column, row).toPosition());
  }

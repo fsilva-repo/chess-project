@@ -19,10 +19,18 @@ public class App {
      System.out.print("Source: ");
      ChessPosition source = UI.readChessPosition(sc);
 
+
+      boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+      UI.clearScreen();
+      // imprime o tabuleiro com os possiveis  movimentos da peça
+      // com o background colorido
+      UI.printBoard(chessMatch.getPieces(), possibleMoves);
+
+
      System.out.println();
      System.out.print("Target: ");
      ChessPosition target = UI.readChessPosition(sc);
-
+      // ChessPiece capturedPiece =
      chessMatch.performChessMove(source, target);      
     }
     catch (ChessException e) {
