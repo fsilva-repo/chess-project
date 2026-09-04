@@ -9,10 +9,21 @@ import exception.ChessException;
 
 public class ChessMatch {
  private Board board;
-
+  private int turn;
+  private Color currentPlayer;
  public ChessMatch() {
+  turn = 1;
+  currentPlayer = Color.WHITE;
   this.board = new Board(8, 8);
   InitialSetup();
+ }
+
+ public int getTurn() {
+  return turn;
+ }
+
+ public Color getCurrentPlayer() {
+  return currentPlayer;
  }
 
  /* metodo para converter os tipos Piece em
@@ -57,6 +68,8 @@ public class ChessMatch {
   validateTargetPosition(source, target);
   // por fim sera retornada uma tipo ChessPiece com uma nova posição no tabuleiro 
   Piece capturedPiece = makeMove(source, target);
+  // passa a jogada para o proximo jogador
+  nextTurn();
   return (ChessPiece) capturedPiece;
  }
 
@@ -77,27 +90,37 @@ public class ChessMatch {
   // verifica posição valida e se à alguma peça na posição de destino
   if (!board.thereIsAPiece(p))
     throw new ChessException("Não existe uma peça na posição de origem");
+
+  // valida se a peça a ser movimantada pertence ao jogador atual 
+  if (currentPlayer != ((ChessPiece)board.piece(p)).getColor())
+    throw new ChessException("Não pode movimentar a peça oponente");
+
+
   // verifica se à posibilidade de movimento
   if (!board.piece(p).istThereAnyPossibleMove())
     throw new ChessException("Não existe movimentos possiveis para essa peça");
  }
 
  private void validateTargetPosition(Position source, Position target) {
-  // if (!board.positionExists(p))
-  // throw new ChessException("A posição de destino não existe no tabuleiro");
-
+  
   if (!board.piece(source).possibleMove(target)) {
     throw new ChessException("A peça não pode ser movida para a posição de destino");
   }
 
  }
 
-
- // metodo para construir a peça define sua posição no tabuleiro 
+ // metodo para construir a peça e definir sua posição no tabuleiro 
  private void placeNewPiece(char column, int row, ChessPiece piece) {
   board.placePiece(piece, new ChessPosition(column, row).toPosition());
  }
  
+
+ // proximo a jogador
+ private void nextTurn() {
+  turn++;
+  currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+ }
+
  // instancia as peça que serão utilizadas
  private void InitialSetup() {
   placeNewPiece('a', 2, new Rook(board, Color.WHITE));
@@ -108,5 +131,6 @@ public class ChessMatch {
   placeNewPiece('d', 8, new King(board, Color.BLACK));
   placeNewPiece('h', 7, new Rook(board, Color.BLACK));
  }
+
 
 }
