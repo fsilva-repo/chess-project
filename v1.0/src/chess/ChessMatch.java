@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boardGame.Board;
 import boardGame.Piece;
 import boardGame.Position;
@@ -9,8 +12,11 @@ import exception.ChessException;
 
 public class ChessMatch {
  private Board board;
-  private int turn;
-  private Color currentPlayer;
+ private int turn;
+ private Color currentPlayer;
+ private List<Piece> piecesOnTheBoard = new ArrayList<>();
+ private List<Piece> capturedPieces = new ArrayList<>();
+
  public ChessMatch() {
   turn = 1;
   currentPlayer = Color.WHITE;
@@ -75,13 +81,22 @@ public class ChessMatch {
 
  /*
   * movimentação da peça.
-  * o metedo remove a posição atual de uma determinada
-  * peça e define sua nova posição no tabuleiro
+  *
+  * retira a peça de origem no tabuleiro
+  * retira  do tabuleiro uma possivel peça capturada no destino
+  * e coloca na posição de destino a peça retirada do local de origem
+  * se houver uma peça adversaria na posição de destino entra para
+  * a lista de peças capturadas
  */
   private Piece makeMove(Position source, Position target) {
-    Piece piece = board.removePiece(source);
+    Piece p = board.removePiece(source);
     Piece capturedPiece = board.removePiece(target);
-    board.placePiece(piece, target);
+    board.placePiece(p, target);
+
+    if (capturedPiece != null) {
+      piecesOnTheBoard.remove(capturedPiece);
+      capturedPieces.add(capturedPiece);
+    }
     return capturedPiece;
   }
 
@@ -95,23 +110,23 @@ public class ChessMatch {
   if (currentPlayer != ((ChessPiece)board.piece(p)).getColor())
     throw new ChessException("Não pode movimentar a peça oponente");
 
-
   // verifica se à posibilidade de movimento
   if (!board.piece(p).istThereAnyPossibleMove())
     throw new ChessException("Não existe movimentos possiveis para essa peça");
  }
 
  private void validateTargetPosition(Position source, Position target) {
-  
-  if (!board.piece(source).possibleMove(target)) {
+  if (!board.piece(source).possibleMove(target))
     throw new ChessException("A peça não pode ser movida para a posição de destino");
-  }
-
  }
-
- // metodo para construir a peça e definir sua posição no tabuleiro 
+ /*
+  * metodo para construir a peça e definir sua posição no tabuleiro
+  * tambem coloca a mesma na lista de peças do tabuleiro 
+  * onde podera ser calculado quando movimentar uma peça a adversaria foi capturada
+ */
  private void placeNewPiece(char column, int row, ChessPiece piece) {
   board.placePiece(piece, new ChessPosition(column, row).toPosition());
+  piecesOnTheBoard.add(piece);
  }
  
 
