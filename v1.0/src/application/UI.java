@@ -106,6 +106,7 @@ public class UI {
     System.out.println();
     System.out.println("Jogada: " + chessMatch.getTurn());
     System.out.println("Esperando Jogador: " + chessMatch.getCurrentPlayer());
+    if (chessMatch.getCheck()) System.out.println("CHECK!");
   }
 
   // metodo auxilliar para imprimir a peça, utilizada por printBoard

@@ -14,6 +14,10 @@ public abstract class ChessPiece extends Piece{
   public Color getColor() {
    return color;
   }
+  // obtendo a posição da peça e convertendo para posição de xadrez
+  public ChessPosition getChessPosition() {
+    return ChessPosition.fromPosition(position);  
+  }
 
   // verifica se a peça é uma openente
   protected boolean isThereOpponentPiece(Position position) {
