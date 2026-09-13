@@ -108,8 +108,10 @@ public class ChessMatch {
   * a lista de peças capturadas
  */
   private Piece makeMove(Position source, Position target) {
-    Piece p = board.removePiece(source);
+    ChessPiece p = (ChessPiece)board.removePiece(source);
+    p.inscreaseMoveCount();
     Piece capturedPiece = board.removePiece(target);
+    // Up casting natural de tipo, p vai de ChessPiece para Piece
     board.placePiece(p, target);
 
     if (capturedPiece != null) {
@@ -122,7 +124,8 @@ public class ChessMatch {
   // desfazendo uma jogada
   private void undoMove(Position source, Position target, Piece capturedPiece) {
         
-    Piece p = board.removePiece(target);
+    ChessPiece p = (ChessPiece)board.removePiece(target);
+    p.descreaseMoveCount();
     board.placePiece(p, source);
 
     if (capturedPiece != null) {
