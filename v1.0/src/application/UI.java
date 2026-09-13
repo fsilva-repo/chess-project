@@ -96,6 +96,7 @@ public class UI {
 
 
   public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
+    System.out.println();
     //listOfCapturedWhitePieces(captured);
     printCapturedPieces(captured); // <=====|
     //System.out.println();
