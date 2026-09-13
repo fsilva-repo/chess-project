@@ -1,6 +1,5 @@
 package application;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -105,8 +104,13 @@ public class UI {
     //listOfCapturedBlackPieces(captured);
     System.out.println();
     System.out.println("Jogada: " + chessMatch.getTurn());
-    System.out.println("Esperando Jogador: " + chessMatch.getCurrentPlayer());
-    if (chessMatch.getCheck()) System.out.println("CHECK!");
+    if (!chessMatch.getCheckMate()) {
+      System.out.println("Esperando Jogador: " + chessMatch.getCurrentPlayer());
+      if (chessMatch.getCheck()) System.out.println("CHECK!");
+    } else {
+      System.out.println("CHECKMATE!");
+      System.out.println("O vencedor é: " + chessMatch.getCurrentPlayer());
+    }
   }
 
   // metodo auxilliar para imprimir a peça, utilizada por printBoard
