@@ -1,5 +1,6 @@
 package chess;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ public class ChessMatch {
  private Board board;
  private boolean check;
  private boolean checkMate;
+ private ChessPiece promoted;
  private int turn;
  private Color currentPlayer;
  private ChessPiece enPassantVuneralble;
@@ -46,6 +48,10 @@ public class ChessMatch {
 
  public ChessPiece getEnPassantVuneralble() {
   return enPassantVuneralble;
+ }
+
+ public ChessPiece getPromoted() {
+  return promoted;
  }
 
  /* metodo para converter os tipos Piece em
@@ -99,6 +105,19 @@ public class ChessMatch {
  
    ChessPiece movedPiece = (ChessPiece)board.piece(target);
    
+   // promocao de pecas
+   promoted = null;
+   if (movedPiece instanceof Pawn) {
+    if (movedPiece.getColor() == Color.WHITE && target.getRow() == 0 ||
+      movedPiece.getColor() == Color.BLACK && target.getRow() == 7)
+    {
+      promoted = (ChessPiece)board.piece(target);
+      promoted = replacePromotedPiece("Q");
+    }
+   }
+   
+
+
    check = (testChesk(opponent(currentPlayer))) ? true : false;
    
    if (testCheskMate(opponent(currentPlayer))) {
@@ -126,6 +145,52 @@ public class ChessMatch {
 
    return (ChessPiece)capturedPiece;
  }
+
+
+ public ChessPiece replacePromotedPiece(String type) {
+   String msg = "Não á peça para ser promovida";
+   if (promoted == null) throw new IllegalStateException(msg);
+
+   if (!type.equalsIgnoreCase("B")
+     && !type.equalsIgnoreCase("N")
+     && !type.equalsIgnoreCase("Q")
+     && !type.equalsIgnoreCase("R")) {
+     String message = "Tipo invalido para promomção";
+     throw new InvalidParameterException(message);
+   }
+
+   Position pos = promoted.getChessPosition().toPosition();
+   Piece p = board.removePiece(pos);
+   piecesOnTheBoard.remove(p);
+   ChessPiece newPiece = newPiece(type, promoted.getColor());
+   board.placePiece(newPiece, pos);
+   piecesOnTheBoard.add(newPiece);
+   return newPiece;
+  }
+
+  private ChessPiece newPiece(String type, Color color) {
+      ChessPiece p;
+      switch (type) {
+        case "B":
+          p = new Bishop(this.board, color);
+        break;
+   
+        case "K":
+          p = new Knight(this.board, color);
+        break;
+
+        case "R":
+          p = new Rook(this.board, color);
+        break;
+
+        default:
+          p = new Queen(this.board, color);
+        break;
+      }
+
+      return p;
+    }
+
 
  /*
   * movimentação da peça.

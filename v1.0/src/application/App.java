@@ -38,7 +38,12 @@ public class App {
      ChessPiece capturedPiece =
      chessMatch.performChessMove(source, target);
      
-     if (capturedPiece != null) captured.add(capturedPiece); 
+     if (capturedPiece != null) captured.add(capturedPiece);
+     if (chessMatch.getPromoted() != null) {
+       System.out.println("A peça sera promovida a [B] ou [R] ou [Q] ou [K]");
+     }
+     String type = sc.nextLine();
+     chessMatch.replacePromotedPiece(type);
     }
     catch (ChessException e) {
       System.err.println(e.getMessage());
