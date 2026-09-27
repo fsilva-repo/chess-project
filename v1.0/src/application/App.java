@@ -38,12 +38,25 @@ public class App {
      ChessPiece capturedPiece =
      chessMatch.performChessMove(source, target);
      
+     // adiciona a peca capturada ao array de pecas capturadas
      if (capturedPiece != null) captured.add(capturedPiece);
+
+     // tratamento das promocoes
      if (chessMatch.getPromoted() != null) {
-       System.out.println("A peça sera promovida a [B] ou [R] ou [Q] ou [K]");
+       System.out.println("A peça sera promovida a [B] ou [R] ou [Q] ou [N]");
+       String type = sc.nextLine();
+       chessMatch.replacePromotedPiece(type);
+       while (!type.equalsIgnoreCase("B")
+        && !type.equalsIgnoreCase("Q")
+        && !type.equalsIgnoreCase("R")
+        && !type.equalsIgnoreCase("N")) {
+        System.out.println("Valor invalido!");
+        System.out.println("A peça sera promovida a [B] ou [R] ou [Q] ou [N]");
+        type = sc.nextLine().toUpperCase();
+       }
      }
-     String type = sc.nextLine();
-     chessMatch.replacePromotedPiece(type);
+
+
     }
     catch (ChessException e) {
       System.err.println(e.getMessage());

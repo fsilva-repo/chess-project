@@ -1,6 +1,5 @@
 package chess;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,7 +79,6 @@ public class ChessMatch {
   return board.piece(position).possibleMoves();
  }
 
-
  /**
   * o metodo recebe as posições origem e destino
   * confirma se são validas
@@ -155,8 +153,7 @@ public class ChessMatch {
      && !type.equalsIgnoreCase("N")
      && !type.equalsIgnoreCase("Q")
      && !type.equalsIgnoreCase("R")) {
-     String message = "Tipo invalido para promomção";
-     throw new InvalidParameterException(message);
+     return promoted;
    }
 
    Position pos = promoted.getChessPosition().toPosition();
